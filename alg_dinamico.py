@@ -15,14 +15,20 @@ def mochila_iterativa(c, p, l, n):
 
 # Algoritmo recursivo com memoização
 def mochila_recusiva(c, p, l, n, m_lucro):
+    # Verifica se a capacidade da mochila ou o número de itens é igual a zero
     if n == 0 or c == 0:
         return 0
+    # Verifica se o valor já foi calculado e armazenado na matriz de lucros
     if m_lucro[n][c] != -1:
         return m_lucro[n][c]
+    # Verifica se o peso do item atual é maior que a capacidade da mochila
     if p[n-1] > c:
+        # Chama a função recursivamente para o próximo item
         m_lucro[n][c] = mochila_recusiva(c, p, l, n-1, m_lucro)
     else:
+        # Calcula o lucro máximo considerando a inclusão e a exclusão do item atual
         m_lucro[n][c] = max(mochila_recusiva(c, p, l, n-1, m_lucro), l[n-1] + mochila_recusiva(c-p[n-1], p, l, n-1, m_lucro))
+    # Retorna o lucro máximo para a capacidade da mochila e o número de itens atual
     return m_lucro[n][c]
 
 # Algoritmo recursivo com memoização que cria a matriz de lucros
